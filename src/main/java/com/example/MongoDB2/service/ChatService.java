@@ -14,5 +14,4 @@ public interface ChatService {
     ChatEntity setMsg(ChatDTO chatDTO);
     ChatEntity getMsg(Integer roomNum);
     List<ChatDTO> getList(String name, String role);
-//    Mono<ChatEntity> getRoom(String name, String name2);
 }

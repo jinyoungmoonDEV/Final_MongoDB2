@@ -36,10 +36,4 @@ public class ChatController {
     public ResponseEntity getChatList(@PathVariable String name, @PathVariable String role){
         return ResponseEntity.ok().body(chatService.getList(name, role));
     }
-
-//    @GetMapping("/room/{name}/{name2}")
-//    public ResponseEntity getRoomNum(@PathVariable String name, @PathVariable String name2){
-//        log.info("ibn");
-//        return ResponseEntity.ok().body(chatService.getRoom(name, name2);
-//    }
 }

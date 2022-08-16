@@ -9,11 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 public class Info {
-    @Id
-    private String id;
     private String msg;
     private String user;
     private String gosu;
-    private Integer room;
     private String createdAt;
 }

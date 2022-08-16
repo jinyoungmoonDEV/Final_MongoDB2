@@ -22,6 +22,7 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public ChatEntity createRoom(ChatDTO chatDTO) {
+        log.info(chatDTO.getInfo());
         chatDTO.setRoom(seq.getAI());
         return chatRepository.save(chatDTO.toEntity());
     }
@@ -30,9 +31,16 @@ public class ChatServiceImpl implements ChatService{
         ChatEntity chat = chatRepository.mFindByRoom(chatDTO.getRoom());
         ChatDTO input = chat.toDTO();
 
-        List info = input.getInfo();
-        info.add(chatDTO.getInfo());
-        input.setInfo(info);
+        log.info(chatDTO.getRoom());
+        log.info(input);
+
+        List<Info> list = input.getInfo();
+        log.info(list);
+        Info info = chatDTO.getInfo().get(0);
+        log.info(info);
+        list.add(info);
+
+        input.setInfo(list);
 
         return chatRepository.save(input.toEntity());
     }
@@ -45,20 +53,19 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public List<ChatDTO> getList(String name, String role) {
         if (role.equals("ROLE_USER")){
-            ChatEntity chat = chatRepository.mFindByUser(name); //유저 이름으로 된 채팅 정보 전부 가져온다 채팅이 여러개면 List에 담아짐
-
-            List<ChatDTO> chatList = new ArrayList<>();//find문 결과 값 인덱스로 뽑기 위해 담을 리스트 생성
-            chatList.add(chat.toDTO());//리스트에 find문 결과값 주입
+            List<ChatDTO> chat = chatRepository.mFindByUser(name); //유저 이름으로 된 채팅 정보 전부 가져온다
 
             List<Info> valueList;//info에서 인덱스 0번값 담기 위한 리스트
             List<ChatDTO> result = new ArrayList<>();//최종 리턴값 담을 리스트
 
-            for (int i = 0; i < chatList.size(); i++){
+            for (int i = 0; i < chat.size(); i++){
                 valueList = new ArrayList<>();//반복 할떄마다 새로지정
-                result = new ArrayList<>();//반복 할떄마다 새로지정
 
-                ChatDTO input = chatList.get(i);//리스트에서 순서대로 뽑기
-                Info value = input.getInfo().get(0);//info에서 인덱스 0번 값 담기
+                ChatDTO input = chat.get(i);//리스트에서 순서대로 뽑기
+
+                Integer index = input.getInfo().size()-1;
+
+                Info value = input.getInfo().get(index);//info에서 인덱스 0번 값 담기
 
                 valueList.add(value);//담은값 리스트로 타입 맞춰준다
 
@@ -76,24 +83,23 @@ public class ChatServiceImpl implements ChatService{
             return result;
         }
         else if (role.equals("ROLE_GOSU")){
-            ChatEntity chat = chatRepository.mFindByGosu(name);
+            List<ChatDTO> chat = chatRepository.mFindByGosu(name);
 
-            List<ChatDTO> chatList = new ArrayList<>();
-            chatList.add(chat.toDTO());
+            List<Info> valueList;//info에서 인덱스 0번값 담기 위한 리스트
+            List<ChatDTO> result = new ArrayList<>();//최종 리턴값 담을 리스트
 
-            List<Info> valueList = new ArrayList<>();
-            List<ChatDTO> result = new ArrayList<>();
+            for (int i = 0; i < chat.size(); i++){
+                valueList = new ArrayList<>();//반복 할떄마다 새로지정
 
-            for (int i = 0; i < chatList.size(); i++){
-                valueList = new ArrayList<>();
-                result = new ArrayList<>();
+                ChatDTO input = chat.get(i);//리스트에서 순서대로 뽑기
 
-                ChatDTO input = chatList.get(i);
-                Info value = input.getInfo().get(0);
+                Integer index = input.getInfo().size()-1;
 
-                valueList.add(value);
+                Info value = input.getInfo().get(index);//info에서 인덱스 0번 값 담기
 
-                ChatDTO last = ChatDTO.builder()
+                valueList.add(value);//담은값 리스트로 타입 맞춰준다
+
+                ChatDTO last = ChatDTO.builder()//builder로 새로운 DTO에 위에서 추출한  info list 와 기존 값들을 불러와 build
                         .id(input.getId())
                         .user(input.getUser())
                         .gosu(input.getGosu())
@@ -101,7 +107,7 @@ public class ChatServiceImpl implements ChatService{
                         .info(valueList)
                         .build();
 
-                result.add(last);
+                result.add(last);//build한 값 리턴할 리스트에 담아준다
             }
 
             return result;

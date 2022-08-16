@@ -18,7 +18,7 @@ spring:
       authentication-database: admin
 #      username: rootuser
 #      password: rootpass
-      database: test2
+      database: chatDB
       port: 27017
-      host: localhost
+      host: 13.209.216.147
       auto-index-creation: true
