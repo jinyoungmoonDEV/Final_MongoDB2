@@ -6,8 +6,13 @@ import com.example.MongoDB2.domain.entity.Info;
 import com.example.MongoDB2.repository.ChatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 
+import java.net.http.HttpClient;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,27 +27,36 @@ public class ChatServiceImpl implements ChatService{
 
     @Override
     public ChatEntity createRoom(ChatDTO chatDTO) {
-        log.info(chatDTO.getInfo());
+        List<Info> input = new ArrayList<>();
+
+        Info empty = Info.builder()
+                .msg(null)
+                .user(null)
+                .gosu(null)
+                .createdAt(null)
+                .build();
+
+        input.add(empty);
+
         chatDTO.setRoom(seq.getAI());
+        chatDTO.setInfo(input);
+
         return chatRepository.save(chatDTO.toEntity());
     }
     @Override
-    public ChatEntity setMsg(ChatDTO chatDTO) {
+    public void setMsg(ChatDTO chatDTO) {
         ChatEntity chat = chatRepository.mFindByRoom(chatDTO.getRoom());
         ChatDTO input = chat.toDTO();
 
-        log.info(chatDTO.getRoom());
-        log.info(input);
-
         List<Info> list = input.getInfo();
-        log.info(list);
         Info info = chatDTO.getInfo().get(0);
-        log.info(info);
         list.add(info);
 
         input.setInfo(list);
 
-        return chatRepository.save(input.toEntity());
+        chatRepository.save(input.toEntity());
+
+
     }
 
     @Override

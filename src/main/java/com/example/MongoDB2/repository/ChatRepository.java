@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ChatRepository extends MongoRepository<ChatEntity, String> {
-    @Query("{room:?0}")
+    @Query("{room:?0,dada:?1}")
     ChatEntity mFindByRoom(Integer room);
     @Query("{user:?0}")
     List<ChatDTO> mFindByUser(String user);

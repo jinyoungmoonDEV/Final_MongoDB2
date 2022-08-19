@@ -11,7 +11,7 @@ import java.util.List;
 public interface ChatService {
 
     ChatEntity createRoom(ChatDTO chatDTO);
-    ChatEntity setMsg(ChatDTO chatDTO);
+    void setMsg(ChatDTO chatDTO);
     ChatEntity getMsg(Integer roomNum);
     List<ChatDTO> getList(String name, String role);
 }

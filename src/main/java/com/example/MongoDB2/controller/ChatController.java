@@ -22,13 +22,12 @@ public class ChatController {
 
     @PostMapping(value = "/insert")
     public ResponseEntity setMsg(@RequestBody ChatDTO chatDTO){
-        log.info(chatDTO);
-        return ResponseEntity.ok().body(chatService.setMsg(chatDTO));
+        chatService.setMsg(chatDTO);
+        return ResponseEntity.ok().body("Inserted");
     }
 
     @GetMapping(value = "/sender/room/{room}")
     public ResponseEntity getMsg(@PathVariable Integer room){
-        log.info(chatService.getMsg(room));
         return ResponseEntity.ok().body(chatService.getMsg(room));
     }
 
