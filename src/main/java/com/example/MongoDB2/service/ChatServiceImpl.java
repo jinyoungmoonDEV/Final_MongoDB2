@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService{
         return chatRepository.save(chatDTO.toEntity());
     }
     @Override
-    public void setMsg(ChatDTO chatDTO) {
+    public ChatEntity setMsg(ChatDTO chatDTO) {
         ChatEntity chat = chatRepository.mFindByRoom(chatDTO.getRoom());
         ChatDTO input = chat.toDTO();
 
@@ -54,9 +54,7 @@ public class ChatServiceImpl implements ChatService{
 
         input.setInfo(list);
 
-        chatRepository.save(input.toEntity());
-
-
+        return chatRepository.save(input.toEntity());
     }
 
     @Override

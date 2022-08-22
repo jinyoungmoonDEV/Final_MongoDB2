@@ -22,8 +22,7 @@ public class ChatController {
 
     @PostMapping(value = "/insert")
     public ResponseEntity setMsg(@RequestBody ChatDTO chatDTO){
-        chatService.setMsg(chatDTO);
-        return ResponseEntity.ok().body("Inserted");
+        return ResponseEntity.ok().body(chatService.setMsg(chatDTO));
     }
 
     @GetMapping(value = "/sender/room/{room}")
