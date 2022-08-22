@@ -47,6 +47,7 @@ public class ChatServiceImpl implements ChatService{
     public ChatEntity setMsg(ChatDTO chatDTO) {
         ChatEntity chat = chatRepository.mFindByRoom(chatDTO.getRoom());
         ChatDTO input = chat.toDTO();
+        log.info(input);
 
         List<Info> list = input.getInfo();
         Info info = chatDTO.getInfo().get(0);
