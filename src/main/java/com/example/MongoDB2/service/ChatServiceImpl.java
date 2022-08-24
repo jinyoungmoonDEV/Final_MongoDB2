@@ -46,8 +46,8 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public ChatEntity setMsg(ChatDTO chatDTO) {
         ChatEntity chat = chatRepository.mFindByRoom(chatDTO.getRoom());
+
         ChatDTO input = chat.toDTO();
-        log.info(input);
 
         List<Info> list = input.getInfo();
         Info info = chatDTO.getInfo().get(0);
@@ -78,7 +78,7 @@ public class ChatServiceImpl implements ChatService{
 
                 Integer index = input.getInfo().size()-1;
 
-                Info value = input.getInfo().get(index);//info에서 인덱스 0번 값 담기
+                Info value = input.getInfo().get(index);//info에서 마지막 인덱스 값 담기
 
                 valueList.add(value);//담은값 리스트로 타입 맞춰준다
 
