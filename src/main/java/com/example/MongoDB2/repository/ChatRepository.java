@@ -17,4 +17,6 @@ public interface ChatRepository extends MongoRepository<ChatEntity, String> {
     List<ChatDTO> mFindByUser(String user);
     @Query("{gosu:?0}")
     List<ChatDTO> mFindByGosu(String gosu);
+    @Query("{user:?0,gosu:?1}")
+    ChatEntity mFindByUserAndGosu(String user, String gosu);
 }
