@@ -6,13 +6,10 @@
     import com.example.MongoDB2.repository.ChatRepository;
     import lombok.RequiredArgsConstructor;
     import lombok.extern.log4j.Log4j2;
-    import org.springframework.http.HttpHeaders;
-    import org.springframework.http.MediaType;
-    import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+    import org.springframework.http.HttpStatus;
     import org.springframework.stereotype.Service;
+    import org.springframework.web.server.ResponseStatusException;
 
-    import java.net.http.HttpClient;
-    import java.time.Duration;
     import java.util.ArrayList;
     import java.util.List;
 
@@ -30,9 +27,11 @@
 
             String user = chatDTO.getUser();
             String gosu = chatDTO.getGosu();
+
             if (chatRepository.mFindByUserAndGosu(user, gosu) != null){
-                throw new RuntimeException("Already Exist");
+                throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "ChatRoom Already Exist");
             }
+
             else {
                 List<Info> input = new ArrayList<>();
 
@@ -74,9 +73,11 @@
         @Override
         public List<ChatDTO> getList(String name, String role) {
             if (role.equals("ROLE_USER")){
+
                 List<ChatDTO> chat = chatRepository.mFindByUser(name); //유저 이름으로 된 채팅 정보 전부 가져온다
 
                 List<Info> valueList;//info에서 인덱스 0번값 담기 위한 리스트
+
                 List<ChatDTO> result = new ArrayList<>();//최종 리턴값 담을 리스트
 
                 for (int i = 0; i < chat.size(); i++){
@@ -104,9 +105,11 @@
                 return result;
             }
             else if (role.equals("ROLE_GOSU")){
+
                 List<ChatDTO> chat = chatRepository.mFindByGosu(name);
 
                 List<Info> valueList;//info에서 인덱스 0번값 담기 위한 리스트
+
                 List<ChatDTO> result = new ArrayList<>();//최종 리턴값 담을 리스트
 
                 for (int i = 0; i < chat.size(); i++){
