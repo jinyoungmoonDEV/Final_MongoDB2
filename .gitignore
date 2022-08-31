@@ -26,6 +26,9 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+#mongo git
+application.yml
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
