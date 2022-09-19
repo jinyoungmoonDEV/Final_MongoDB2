@@ -32,7 +32,7 @@
                 throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "ChatRoom Already Exist");
             }
 
-            else {
+            else {// NPE 방지
                 List<Info> input = new ArrayList<>();
 
                 Info empty = Info.builder()
