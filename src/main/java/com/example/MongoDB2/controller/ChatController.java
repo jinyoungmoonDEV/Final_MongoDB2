@@ -15,22 +15,22 @@ public class ChatController {
 
     private final ChatServiceImpl chatService;
 
-    @PostMapping("/new")
+    @PostMapping("/new") //채팅방 생성
     public ResponseEntity createRoom(@RequestBody ChatDTO chatDTO){
-        return ResponseEntity.ok().body(chatService.createRoom(chatDTO));
+        return ResponseEntity.ok().body(chatService.newRoom(chatDTO));
     }
 
-    @PostMapping(value = "/insert")
+    @PostMapping(value = "/insert") //채팅 input 저장
     public ResponseEntity setMsg(@RequestBody ChatDTO chatDTO){
         return ResponseEntity.ok().body(chatService.setMsg(chatDTO));
     }
 
-    @GetMapping(value = "/sender/room/{room}")
+    @GetMapping(value = "/sender/room/{room}") //채팅이력 불러오기
     public ResponseEntity getMsg(@PathVariable Integer room){
         return ResponseEntity.ok().body(chatService.getMsg(room));
     }
 
-    @GetMapping(value = "/list/{name}/{role}")//gosu, user, msg, room, createdAt
+    @GetMapping(value = "/list/{name}/{role}") //채팅방 리스트 불러오기
     public ResponseEntity getChatList(@PathVariable String name, @PathVariable String role){
         return ResponseEntity.ok().body(chatService.getList(name, role));
     }

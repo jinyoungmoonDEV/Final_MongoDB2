@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 public class Info {
-    private String msg;
-    private String user;
-    private String gosu;
-    private String createdAt;
+    private String msg; //메세지
+    private String user; //사용자
+    private String gosu; //전문가
+    private String createdAt; //생성 날짜
 }

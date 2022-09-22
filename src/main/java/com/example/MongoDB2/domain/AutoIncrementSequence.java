@@ -13,6 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AutoIncrementSequence {
     @Id
     private String id;
-    private String sig;
-    private Integer seq;
+    private String sig; //정보 불러오기 위한 Signature
+    private Integer seq; //새로운 채팅방 번호
 }
