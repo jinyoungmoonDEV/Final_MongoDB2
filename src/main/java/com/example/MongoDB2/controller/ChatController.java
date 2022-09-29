@@ -15,7 +15,7 @@ public class ChatController {
 
     private final ChatServiceImpl chatService;
 
-    @PostMapping("/new") //채팅방 생성
+    @PostMapping(value = "/room") //채팅방 생성
     public ResponseEntity createRoom(@RequestBody ChatDTO chatDTO){
         return ResponseEntity.ok().body(chatService.newRoom(chatDTO));
     }
@@ -25,7 +25,7 @@ public class ChatController {
         return ResponseEntity.ok().body(chatService.setMsg(chatDTO));
     }
 
-    @GetMapping(value = "/sender/room/{room}") //채팅이력 불러오기
+    @GetMapping(value = "/room/{room}") //채팅이력 불러오기
     public ResponseEntity getMsg(@PathVariable Integer room){
         return ResponseEntity.ok().body(chatService.getMsg(room));
     }
